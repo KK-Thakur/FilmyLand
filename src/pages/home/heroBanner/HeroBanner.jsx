@@ -29,6 +29,7 @@ const HeroBanner = () => {
     function searchQueryHandler(e){        
         if((e.key==="Enter" || e.type==="click")&& query.length >0){
             navigate(`/search/${query}`)
+            setQuery("");
         }
     }
     const skeleton_style={

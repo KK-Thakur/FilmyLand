@@ -15,37 +15,37 @@ const Header = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
     const [showSearch, setShowSearch] = useState(false)
     const [query, setQuery] = useState("");
-    const [lastScrollY, setLastScrollY]=useState(200);
+    const [lastScrollY, setLastScrollY] = useState(200);
     const navigate = useNavigate();
-    const location =useLocation();
-    
+    const location = useLocation();
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [location]);
 
-    function controlNavbar(){
-        if(window.scrollY > 200){
-            if(lastScrollY > window.scrollY && !mobileMenu){
+    function controlNavbar() {
+        if (window.scrollY > 200) {
+            if (lastScrollY > window.scrollY && !mobileMenu) {
                 setShow("show")
             }
-            else{
+            else {
                 setShow("hide");
             }
         }
-        else{
+        else {
             setShow("top");
         }
         setLastScrollY(window.scrollY);
     }
-    window.addEventListener('scroll',controlNavbar);
-    
-     
+    window.addEventListener('scroll', controlNavbar);
+
+
     function openSearch() {
         setMobileMenu(false);
         setShowSearch(true);
     }
 
-    function openMobileMenu(){
+    function openMobileMenu() {
         setMobileMenu(true);
         setShowSearch(false);
     }
@@ -54,13 +54,23 @@ const Header = () => {
         navigate("/explore/" + type);
         setMobileMenu(false);
     }
+    
+    /*document.addEventListener('keyup', detectTabKey);
+
+    function detectTabKey(e) {
+        if (e.keyCode == 9) {
+            console.log(e.key);
+        }
+    }
+    */
 
     function searchQueryHandler(e) {
-        if (e.key === "Enter" && query.length > 0) {
+        if ((e.key === "Enter" || e.key=== "Tab") && query.length > 0) {
             navigate(`/search/${query}`)
             setTimeout(() => {
                 setShowSearch(false);
-            }, 1000); 
+                setQuery("");
+            }, 500);
         }
     }
 
@@ -100,7 +110,7 @@ const Header = () => {
             </ContentWrapper>
 
             {showSearch &&
-                (   
+                (
                     <div className="searchBar">
                         <ContentWrapper>
                             <div className="searchInput">
@@ -108,7 +118,7 @@ const Header = () => {
                                     type="text"
                                     placeholder="Search for a movie or tv show...."
                                     onChange={(e) => setQuery(e.target.value)}
-                                    onKeyUp={searchQueryHandler}
+                                    onKeyDown={searchQueryHandler}
                                 />
                                 <VscChromeClose
                                     onClick={() => setShowSearch(false)}
