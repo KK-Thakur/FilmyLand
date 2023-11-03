@@ -7,7 +7,7 @@ import Carousel from '../../../components/carousel/Carousel'
 const Latest = () => {
     const [endPoint, setEndPoint] = useState("movie");
     const {data,loading}=useFetch(`/${endPoint}/latest`);
-    console.log(data);
+    // console.log(data);
     function onTabChange(tab) {
         setEndPoint(tab==="Movies" ? "movie" : "tv")
     }

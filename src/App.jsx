@@ -27,7 +27,7 @@ function App() {
     const fetchApiConfig = () => {
         const response = fetchDataFromApi("/configuration");
         response.then(resp => {
-            console.log(resp);
+            // console.log(resp);
             const url = {
                 backdrop:resp.images.secure_base_url + "original",  //size avialable:- ['w300', 'w780', 'w1280', 'original']
                 poster:resp.images.secure_base_url + "w500",    //size avialable:- ['w92', 'w154', 'w185', 'w342', 'w500', 'w780', 'original']

@@ -41,7 +41,7 @@ const Explore = () => {
         //fetchDataFromApi(url).then(
         fetchDataFromApi(`/discover/${mediaType}`, filters).then(
             (res) => {
-                console.log(res);
+                // console.log(res);
                 setData(res);
                 setPageNum((prev) => prev + 1);
                 setLoading(false);
@@ -88,7 +88,7 @@ const Explore = () => {
     function onChange(selectedOptions, action) {
         if (action.name === "sortby") {
             setSortBy(selectedOptions);
-            console.log(action.action);
+            // console.log(action.action);
             if (action.action !== "clear") {
                 filters.sort_by = selectedOptions.value;
             }
