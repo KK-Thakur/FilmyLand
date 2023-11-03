@@ -20,6 +20,7 @@ const Explore = () => {
     const [loading, setLoading] = useState(true);
     const [sortBy, setSortBy] = useState(null);
     const [genre, setGenre] = useState(null);
+    const [origin_country, setOrigin_country] = useState(null);
 
     const { mediaType } = useParams();
     // const [selectedOption, setSelectedOption] = useState(null);
@@ -34,6 +35,10 @@ const Explore = () => {
         { value: "original_title.asc", label: "Title (A-Z)" },
     ];
 
+    const countries = [
+        { value: 'IN', label: 'India' },
+        { value: 'US', label: 'USA' },
+    ];
 
     const fetchInitialData = () => {
         setLoading(true);
@@ -71,6 +76,8 @@ const Explore = () => {
         setData(null);
         setPageNum(1);
         setSortBy(null);
+        setOrigin_country(null);
+        setGenre(null);
         fetchInitialData();
     }, [mediaType])
 
@@ -78,14 +85,29 @@ const Explore = () => {
     const { data: genresData } = useFetch(`/genre/${mediaType}/list`);
     // console.log(genresData);
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
-
 
     function onChange(selectedOptions, action) {
+        if (action.name === "originCountry") {
+            setOrigin_country(selectedOptions);
+            // console.log(action.action);
+            if (action.action !== "clear") {
+                // console.log(selectedOptions);
+                let countryId ="";
+                selectedOptions.map((g,i) => {
+                    if(i==0){
+                        countryId+=g.value;
+                    }
+                    else{
+                        countryId=countryId+","+g.value
+                    }
+                });
+                // console.log(countryId);
+                filters.with_origin_country = countryId;
+            }
+            else {
+                delete filters.with_origin_country;
+            }
+        }
         if (action.name === "sortby") {
             setSortBy(selectedOptions);
             // console.log(action.action);
@@ -99,6 +121,7 @@ const Explore = () => {
         if (action.name === "genres") {
             setGenre(selectedOptions);
             if (action.action !== "clear") {
+                // console.log(selectedOptions);
                 let genreId = selectedOptions.map((g) => g.id);
                 genreId = JSON.stringify(genreId).slice(1, -1);
                 filters.with_genres = genreId;
@@ -122,6 +145,20 @@ const Explore = () => {
                     <div className="filters">
                         <Select
                             isMulti
+                            closeMenuOnSelect={false}
+                            name="originCountry"  //to get name when action happen action
+                            value={origin_country}
+                            className="react-select-container sortbyDD"
+                            classNamePrefix="react-select"
+
+                            isClearable={true}
+                            onChange={onChange}
+                            options={countries}
+                            placeholder="Origin Country"
+                        />
+                        
+                        <Select
+                            isMulti
                             name="genres"
                             value={genre}
                             closeMenuOnSelect={false}
@@ -129,7 +166,7 @@ const Explore = () => {
                             getOptionLabel={(option) => option.name}
                             getOptionValue={(option) => option.id}
                             onChange={onChange}
-                            placeholder="Select genres"
+                            placeholder="Select Genres"
                             className="react-select-container genresDD"
                             classNamePrefix="react-select"
                         />
@@ -143,7 +180,7 @@ const Explore = () => {
                             isClearable={true}
                             onChange={onChange}
                             options={sortbyData}
-                            placeholder="Sort by"
+                            placeholder="Sort By"
                         />
                     </div>
                 </div>
