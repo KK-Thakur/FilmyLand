@@ -55,58 +55,64 @@ const Carousel = ({ data, loading, endPoint, title }) => {
         <div className="carousel">
             <ContentWrapper>
                 {title && <div className="carouselTitle">{title}</div>}    {/*only for details page*/}
-                {data?.length > 0 ?
-                    (<>
-                        <BsFillArrowLeftCircleFill
-                            className="carouselLeftNav arrow"
-                            onClick={() => sliding("left")}
-                        />
-                        <BsFillArrowRightCircleFill
-                            className="carouselRighttNav arrow"
-                            onClick={() => sliding("right")}
-                        />
-                    </>):
-                    (
-                        <span style={{color: "#7e7a75"}}>Sorry! No Result Found!</span>
-                    )
-                }
+
                 {(!loading && data) ? (
-                    <div className="carouselItems" ref={carouselContainer}>
-                        {data?.map((item,i) => {
-                            const posterUrl = item.poster_path
-                                ? url.poster + item.poster_path
-                                : PosterFallback;
-                            return (
-                                <div
-                                    key={item.id}
-                                    className="carouselItem"
-                                    onClick={() =>
-                                        navigate(`/${item.media_type || endPoint}/${item.id}`)
-                                    }
-                                >
-                                    <div className="posterBlock">
-                                        <LazyLoadImg src={posterUrl} />
-                                        <CircleRating
-                                            rating={item.vote_average.toFixed(1)}
-                                        />
-                                        <Genres
-                                            data={item.genre_ids.slice(0, 2)}
-                                        />
+                    <>
+                        <>
+                            {data?.length > 0 ?
+                                (<>
+                                    <BsFillArrowLeftCircleFill
+                                        className="carouselLeftNav arrow"
+                                        onClick={() => sliding("left")}
+                                    />
+                                    <BsFillArrowRightCircleFill
+                                        className="carouselRighttNav arrow"
+                                        onClick={() => sliding("right")}
+                                    />
+                                </>) :
+                                (
+                                    <span style={{ color: "#7e7a75" }}>Sorry! No Result Found!</span>
+                                )
+                            }
+                        </>
+
+                        <div className="carouselItems" ref={carouselContainer}>
+                            {data?.map((item, i) => {
+                                const posterUrl = item.poster_path
+                                    ? url.poster + item.poster_path
+                                    : PosterFallback;
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className="carouselItem"
+                                        onClick={() =>
+                                            navigate(`/${item.media_type || endPoint}/${item.id}`)
+                                        }
+                                    >
+                                        <div className="posterBlock">
+                                            <LazyLoadImg src={posterUrl} />
+                                            <CircleRating
+                                                rating={item.vote_average.toFixed(1)}
+                                            />
+                                            <Genres
+                                                data={item.genre_ids.slice(0, 2)}
+                                            />
+                                        </div>
+                                        <div className="textBlock">
+                                            <span className="title">
+                                                {item.title || item.name}
+                                            </span>
+                                            <span className="date">
+                                                {dayjs(item.release_date || item.first_air_date).format(
+                                                    "MMM D, YYYY"
+                                                )}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div className="textBlock">
-                                        <span className="title">
-                                            {item.title || item.name}
-                                        </span>
-                                        <span className="date">
-                                            {dayjs(item.release_date || item.first_air_date).format(
-                                                "MMM D, YYYY"
-                                            )}
-                                        </span>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
+                                );
+                            })}
+                        </div>
+                    </>
                 ) : (
                     <div className="loadingSkeleton">
                         {skItem()}
