@@ -65,7 +65,7 @@ const Header = () => {
     */
 
     function searchQueryHandler(e) {
-        if ((e.key === "Enter" || e.key=== "Tab") && query.length > 0) {
+        if (e.key === "Enter" && query.length > 0) {
             navigate(`/search/${query}`)
             setTimeout(() => {
                 setShowSearch(false);
@@ -115,7 +115,8 @@ const Header = () => {
                         <ContentWrapper>
                             <div className="searchInput">
                                 <input
-                                    type="text"
+                                    // type="text"
+                                    type="search"
                                     placeholder="Search for a movie or tv show...."
                                     onChange={(e) => setQuery(e.target.value)}
                                     onKeyDown={searchQueryHandler}
