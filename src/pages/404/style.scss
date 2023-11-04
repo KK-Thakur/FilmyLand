@@ -1,0 +1,29 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: azure;
+    margin-bottom: 30px;
+}
+.wrapper h1 {
+    font-size: 2.8rem;
+    
+}
+.wrapper .message {
+    font-size: 1rem;
+    padding: 20px;
+    text-align: center;
+    width: 80%;
+}
+.btn {
+    background: rgb(88, 0, 202);
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 12px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+.btn:hover {background: rgb(132, 37, 255) ;}
+.copyRights {
+    margin-top: 60px;
+}
