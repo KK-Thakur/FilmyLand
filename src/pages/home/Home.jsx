@@ -5,6 +5,7 @@ import Trending from './trending/Trending'
 import Popular from './popular/Popular'
 import TopRated from './topRated/TopRated'
 import Latest from './latest/Latest'
+import UPComing from './upcoming/UpComing'
 
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
       <Trending/>
       <Popular/> 
       <TopRated/> 
+      <UPComing />
       {/* <Latest />  */}
     </div>
   )

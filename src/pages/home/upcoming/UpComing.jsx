@@ -4,22 +4,18 @@ import SwitchTabs from '../../../components/switchTabs/SwitchTabs'
 import useFetch from '../../../hooks/useFetch'
 import Carousel from '../../../components/carousel/Carousel'
 
-const Latest = () => {
+const UPComing = () => {
     const [endPoint, setEndPoint] = useState("movie");
-    const {data,loading}=useFetch(`/${endPoint}/latest`);
-    console.log(data);
-    function onTabChange(tab) {
-        setEndPoint(tab==="Movies" ? "movie" : "tv")
-    }
+    const {data,loading}=useFetch(`/${endPoint}/upcoming`);
+    
     return (
         <div className='carouselSection'>
             <ContentWrapper>
-                <span className="carouselTitle">Latest</span>
-                <SwitchTabs data={["Movies", "Tv Shows"]} onTabChange={onTabChange} />
+                <span className="carouselTitle">Upcoming Movies</span>
             </ContentWrapper>
             <Carousel endPoint={endPoint} data={data?.results} loading={loading}/>
         </div>
     )
 }
 
-export default Latest
+export default UPComing
